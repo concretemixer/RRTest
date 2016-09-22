@@ -65,12 +65,12 @@ public class Locomotion : MonoBehaviour {
 
         RailSection rails = GetRailSectionUnder(transform);
 
-        List<Vector3> backbone = rails.GetBackbonePoints();
+        List<Vector3> backbone = rails.GetBackbonePoints(rails);
 
-        if (rails.railSectionPrev!=null)
-            backbone.AddRange(rails.railSectionPrev.GetBackbonePoints());
-        if (rails.railSectionNext!=null)
-            backbone.AddRange(rails.railSectionNext.GetBackbonePoints());
+        foreach (var section in rails.GetAdjacentSections())
+        {
+            backbone.AddRange(section.GetBackbonePoints(rails));
+        }
 
         Vector3 fwd = transform.TransformVector(Vector3.forward * distance);
 
@@ -79,8 +79,11 @@ public class Locomotion : MonoBehaviour {
             return Vector3.Dot(v1, fwd).CompareTo(Vector3.Dot(v2, fwd));
         });
 
-       // GetComponent<LineRenderer>().SetVertexCount(backbone.Count);
-        //GetComponent<LineRenderer>().SetPositions(backbone.ToArray());
+        if (GetComponent<LineRenderer>() != null)
+        {
+            GetComponent<LineRenderer>().SetVertexCount(backbone.Count);
+            GetComponent<LineRenderer>().SetPositions(backbone.ToArray());
+        }
 
         Vector3 bogieFwdMoved,bogieBwdMoved;
         Quaternion bogieFwdRotated, bogieBwdRotated;
@@ -90,8 +93,8 @@ public class Locomotion : MonoBehaviour {
         transform.position = (bogieFwdMoved +bogieBwdMoved)/2 + new Vector3(0,-0.072f,0);
         transform.rotation = Quaternion.LookRotation(bogieFwdMoved-bogieBwdMoved,Vector3.up);
 
-        bogieBwd.transform.rotation = bogieBwdRotated;
-        bogieFwd.transform.rotation = bogieFwdRotated;
+        bogieBwd.transform.rotation = Quaternion.Slerp(bogieBwd.transform.rotation, bogieBwdRotated, Time.deltaTime);
+        bogieFwd.transform.rotation = Quaternion.Slerp( bogieFwd.transform.rotation, bogieFwdRotated, Time.deltaTime);
     }
 
     private RailSection GetRailSectionUnder(Transform transform)

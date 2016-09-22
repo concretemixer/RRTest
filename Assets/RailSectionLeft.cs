@@ -14,9 +14,9 @@ public class RailSectionLeft : RailSection {
 	
 	}
 
-    private const float R = 25.0f;
+    private const float R = 25.5f;
 
-    public override List<Vector3> GetBackbonePoints()
+    public override List<Vector3> GetBackbonePoints(RailSection section)
     {
         List<Vector3> p = new List<Vector3>();
 

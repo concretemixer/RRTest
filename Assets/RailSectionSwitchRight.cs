@@ -2,10 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class RailSectionSwitchLeft : RailSectionSwitch
+public class RailSectionSwitchRight : RailSectionSwitch
 {
-
-
 
     void Start () {
         IndicateSwitch();
@@ -22,7 +20,7 @@ public class RailSectionSwitchLeft : RailSectionSwitch
     {
         List<Vector3> p = new List<Vector3>();
 
-        Vector3 center = transform.position + transform.TransformVector(Vector3.right) * R;
+        Vector3 center = transform.position + transform.TransformVector(Vector3.left) * R;
         Vector3 dir = transform.position - center;
 
         bool returnSwitched = false;
@@ -49,25 +47,25 @@ public class RailSectionSwitchLeft : RailSectionSwitch
 
         if (returnSwitched)
         {
-            dir = Quaternion.Euler(0, 22.5f, 0) * dir;
+            dir = Quaternion.Euler(0, -22.5f, 0) * dir;
             p.Add(center + dir);
 
             for (int a = 0; a < 8; a++)
             {
-                dir = Quaternion.Euler(0, -45f / 8f, 0) * dir;
+                dir = Quaternion.Euler(0, 45f / 8f, 0) * dir;
                 p.Add(center + dir);
             }
         }
         else
         {
-            dir = Quaternion.Euler(0, 22.5f, 0) * dir;
+            dir = Quaternion.Euler(0, -22.5f, 0) * dir;
             Vector3 point = center + dir;
 
-            dir = Quaternion.Euler(0, -90f, 0) * dir;
+            dir = Quaternion.Euler(0, 90f, 0) * dir;
             dir.Normalize();
 
 
-            p.Add(point + dir * 2);
+            p.Add(point + dir * 2);            
             p.Add(point + dir * 18);
         }
 
@@ -79,7 +77,7 @@ public class RailSectionSwitchLeft : RailSectionSwitch
         var result = new List<RailSection>();
         if (switchedToSide)
         {
-            if (railSectionThird!= null)
+            if (railSectionThird != null)
                 result.Add(railSectionThird);
         }
         else
@@ -87,11 +85,12 @@ public class RailSectionSwitchLeft : RailSectionSwitch
             if (railSectionNext != null)
                 result.Add(railSectionNext);
         }
-        
+
         if (railSectionPrev != null)
             result.Add(railSectionPrev);
 
         return result;
     }
+
 
 }

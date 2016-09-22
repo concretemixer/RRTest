@@ -18,7 +18,7 @@ public class Train : MonoBehaviour {
             a = -5;
         }
 
-        if (Mathf.Abs(v)<30)
+        if (Mathf.Abs(v)<25)
             v += a * Time.deltaTime;
 
        

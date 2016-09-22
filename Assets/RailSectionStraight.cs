@@ -14,7 +14,7 @@ public class RailSectionStraight : RailSection {
 	
 	}
 
-    public override List<Vector3> GetBackbonePoints()
+    public override List<Vector3> GetBackbonePoints(RailSection section)
     {
         List<Vector3> p = new List<Vector3>();
         p.Add(transform.position + transform.TransformVector(Vector3.forward) * 9);
