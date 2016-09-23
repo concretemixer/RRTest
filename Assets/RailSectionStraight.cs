@@ -23,5 +23,11 @@ public class RailSectionStraight : RailSection {
         return p;
     }
 
-    
+    public override List<Vector3> GetJoints()
+    {
+        List<Vector3> p = new List<Vector3>();
+        p.Add(transform.position + transform.TransformVector(Vector3.forward) * 10);
+        p.Add(transform.position + transform.TransformVector(Vector3.back) * 10);
+        return p;
+    }    
 }

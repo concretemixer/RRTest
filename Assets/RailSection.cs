@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class RailSection : MonoBehaviour {
 
     public RailSection railSectionPrev;
@@ -32,4 +33,8 @@ public class RailSection : MonoBehaviour {
         return result;
     }
 
+    public virtual List<Vector3> GetJoints()
+    {
+        return new List<Vector3>();
+    }
 }
